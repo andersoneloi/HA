@@ -13,7 +13,7 @@ Blueprints
 1. Copie o conteúdo do arquivo `.yaml` e cole em `Configurações > Blueprints > Importar Blueprint`.
 2. Ou use o link de importação abaixo.
 
-📥 [Importar este blueprint](https://github.com/andersoneloi/HA/blueprints/paralelovirtual_multi.yaml)
+📥 [Importar este blueprint](https://github.com/andersoneloi/HA/blob/main/paralelovirtual_multi.yaml)
 
 ## 🧪 Exemplo de uso
 

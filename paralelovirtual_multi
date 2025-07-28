@@ -1,0 +1,111 @@
+blueprint:
+  name: Paralelo Virtual com Boolean (Multi-Virtual)
+  description: >
+    Sincroniza um interruptor principal e múltiplos interruptores virtuais com um input_boolean.
+    Ao mudar o estado de qualquer um deles, os outros seguem o estado refletido no input_boolean.
+    Esta versão evita loops com verificação de estado.
+  domain: automation
+  input:
+    switch_principal:
+      name: Interruptor Principal
+      selector:
+        entity:
+          domain: switch
+    switches_virtuais:
+      name: Interruptores Virtuais
+      selector:
+        entity:
+          domain: switch
+          multiple: true
+    boolean_virtual:
+      name: Input Boolean
+      selector:
+        entity:
+          domain: input_boolean
+
+mode: single
+
+variables:
+  switch_principal: !input switch_principal
+  switches_virtuais: !input switches_virtuais
+  boolean_virtual: !input boolean_virtual
+
+trigger:
+  - platform: state
+    entity_id: !input switch_principal
+    id: principal
+  - platform: state
+    entity_id: !input boolean_virtual
+    id: boolean
+  - platform: state
+    entity_id: !input switches_virtuais
+    id: virtuais
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: principal
+          - condition: template
+            value_template: >
+              {{ states(switch_principal) != states(boolean_virtual) }}
+        sequence:
+          - service: >
+              {% if trigger.to_state.state == 'on' %}
+                input_boolean.turn_on
+              {% else %}
+                input_boolean.turn_off
+              {% endif %}
+            target:
+              entity_id: "{{ boolean_virtual }}"
+
+      - conditions:
+          - condition: trigger
+            id: virtuais
+          - condition: template
+            value_template: >
+              {{ states(trigger.entity_id) != states(boolean_virtual) }}
+        sequence:
+          - service: >
+              {% if trigger.to_state.state == 'on' %}
+                input_boolean.turn_on
+              {% else %}
+                input_boolean.turn_off
+              {% endif %}
+            target:
+              entity_id: "{{ boolean_virtual }}"
+
+      - conditions:
+          - condition: trigger
+            id: boolean
+        sequence:
+          - if:
+              - condition: template
+                value_template: >
+                  {{ states(switch_principal) != trigger.to_state.state }}
+            then:
+              - service: >
+                  {% if trigger.to_state.state == 'on' %}
+                    switch.turn_on
+                  {% else %}
+                    switch.turn_off
+                  {% endif %}
+                target:
+                  entity_id: "{{ switch_principal }}"
+
+          - repeat:
+              for_each: "{{ switches_virtuais }}"
+              sequence:
+                - if:
+                    - condition: template
+                      value_template: >
+                        {{ states(repeat.item) != trigger.to_state.state }}
+                  then:
+                    - service: >
+                        {% if trigger.to_state.state == 'on' %}
+                          switch.turn_on
+                        {% else %}
+                          switch.turn_off
+                        {% endif %}
+                      target:
+                        entity_id: "{{ repeat.item }}"

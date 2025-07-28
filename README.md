@@ -4,6 +4,7 @@ Blueprints
 # paralelovirtual_multi
 
 📘 Blueprint para [Home Assistant](https://www.home-assistant.io) que faz paralelo virtual.
+
 📘 Sincroniza um interruptor principal e múltiplos interruptores virtuais com um input_boolean. Ao mudar o estado de qualquer um deles, os outros seguem o estado refletido no input_boolean. Esta versão evita loops com verificação de estado.
 
 ## 📋 Requisitos

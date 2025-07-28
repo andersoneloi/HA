@@ -13,7 +13,7 @@ Blueprints
 ## 🛠️ Instalação
 
 1. Copie o conteúdo do arquivo `.yaml` e cole em `Configurações > Blueprints > Importar Blueprint`.
-2. criar um input_boolean para cada paralelo virtual a ser criado na pasta homeassistant/input_booleans
+2. Para cada paralelo virtual a ser criado adcione um input_boolean na pasta homeassistant/input_booleans. 
 3. Ou use o link de importação abaixo.
 
 📥 [Importar este blueprint](https://github.com/andersoneloi/HA/blob/main/paralelovirtual_multi.yaml)
@@ -22,7 +22,6 @@ Blueprints
 
 - Input_boolean
 <img width="289" height="120" alt="image" src="https://github.com/user-attachments/assets/eb8b5842-9b3e-4ae6-ac92-45d146ac5658" />
-
 
 
 - Paralelo virtual

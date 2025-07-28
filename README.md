@@ -18,8 +18,11 @@ Blueprints
 📥 [Importar este blueprint](https://github.com/andersoneloi/HA/blob/main/paralelovirtual_multi.yaml)
 
 ## 🧪 Exemplo de uso
+
 - Input_boolean
 <img width="289" height="120" alt="image" src="https://github.com/user-attachments/assets/eb8b5842-9b3e-4ae6-ac92-45d146ac5658" />
+
+
 
 - Paralelo virtual
 <img width="1062" height="564" alt="image" src="https://github.com/user-attachments/assets/67eb5f78-cbec-4df4-a419-012ed0ca32af" />
